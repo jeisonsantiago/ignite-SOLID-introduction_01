@@ -1,0 +1,250 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Atlas",
+        "description": "This is an API Atlas doc",
+        "version": "1.0.0",
+        "contact": {
+            "email": "jeison.santiago@gmail.com"
+        }
+    },
+    "paths": {
+        "/users": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a user",
+                "description": "Create a new User",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": "string",
+                                    "email": "string"
+                                }
+                            },
+                            "example": {
+                                "name": "Joao",
+                                "email": "joao@gmail.com"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User Created"
+                    },
+                    "400": {
+                        "description": "User email already exists"
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "List all users",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "header",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "admin":"boolean",
+                                        "id":"uuid",
+                                        "name": "string",
+                                        "email": "string",
+                                        "created_at":"date",
+                                        "updated_at":"date"
+                                    }
+                                },
+                                "example": [
+                                    {
+                                    "admin":true,
+                                    "name": "Joao",
+                                    "id": "132651321-651321-21615",
+                                    "email": "joao@gmail.com",
+                                    "created_at":"",
+                                    "updated_at":""
+                                    },
+                                    {
+                                        "admin":false,
+                                        "name": "Joca",
+                                        "id": "132321-651321-21615",
+                                        "email": "joca@gmail.com",
+                                        "created_at":"",
+                                        "updated_at":""
+                                        }
+                                ]
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "User must be admin",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": "string"
+                                    }
+                                },
+                                "example": {
+                                    "error": "You must be admin to list all users"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Returns user",
+                "description": "Returns specific user by it's ID",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "admin":"boolean",
+                                        "id":"uuid",
+                                        "name": "string",
+                                        "email": "string",
+                                        "created_at":"date",
+                                        "updated_at":"date"
+                                    }
+                                },
+                                "example": [
+                                    {
+                                    "admin":true,
+                                    "name": "Joao",
+                                    "id": "132651321-651321-21615",
+                                    "email": "joao@gmail.com",
+                                    "created_at":"",
+                                    "updated_at":""
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User must be admin",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": "string"
+                                    }
+                                },
+                                "example": {
+                                    "error": "User not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}/admin": {
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Turns user Admin",
+                "description": "Turn user Admin by it's ID",
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "schema": {
+                            "type": "string",
+                            "format": "uuid"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "admin":"boolean",
+                                        "id":"uuid",
+                                        "name": "string",
+                                        "email": "string",
+                                        "created_at":"date",
+                                        "updated_at":"date"
+                                    }
+                                },
+                                "example": [
+                                    {
+                                    "admin":true,
+                                    "name": "Joao",
+                                    "id": "132651321-651321-21615",
+                                    "email": "joao@gmail.com",
+                                    "created_at":"",
+                                    "updated_at":""
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User must be admin",
+                        "content":{
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "error": "string"
+                                    }
+                                },
+                                "example": {
+                                    "error": "User not found"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
